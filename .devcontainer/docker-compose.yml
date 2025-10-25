@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   # PostgreSQL Database for ZenML metadata
   postgres:
@@ -50,13 +48,12 @@ services:
     ports:
       - "8080:8080"
     environment:
-      ZENML_STORE_URL: postgresql://zenml:zenml@postgres:5432/zenml
       ZENML_DEFAULT_USER_NAME: default
       ZENML_DEFAULT_USER_PASSWORD: zenml
       ZENML_SERVER_AUTO_ACTIVATE: "true"
-    depends_on:
-      postgres:
-        condition: service_healthy
+      ZENML_SERVER_ROOT_URL_PATH: ""
+    volumes:
+      - zenml-data:/app/zenml
     networks:
       - zenml-network
     healthcheck:
@@ -100,3 +97,4 @@ networks:
 volumes:
   postgres-data:
   qdrant-data:
+  zenml-data:
